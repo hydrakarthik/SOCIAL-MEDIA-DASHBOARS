@@ -2,6 +2,7 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import PlatformSelector from '../components/PlatformSelector';
 import StatsCard from '../components/StatsCard';
 import AIInsightCard from '../components/AIInsightCard';
 import ScheduledPosts from '../components/ScheduledPosts';
@@ -17,6 +18,9 @@ const Index = () => {
         <Header />
         
         <main className="p-6">
+          {/* Platform Selector */}
+          <PlatformSelector />
+
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatsCard
