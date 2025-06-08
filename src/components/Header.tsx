@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Bell, MessageSquare } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const currentHour = new Date().getHours();
@@ -20,6 +21,9 @@ const Header = () => {
         </div>
 
         <div className="flex items-center space-x-4">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           {/* AI Assistant */}
           <div className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full hover:shadow-lg transition-all duration-200 cursor-pointer">
             <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
