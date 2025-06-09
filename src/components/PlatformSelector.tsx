@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Instagram, Youtube, Twitter, Facebook, Linkedin, TikTok } from 'lucide-react';
+import { Instagram, Youtube, Twitter, Facebook, Linkedin, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const platforms = [
@@ -9,7 +8,7 @@ const platforms = [
   { name: 'Twitter', icon: Twitter, color: 'bg-gradient-to-r from-blue-400 to-blue-500' },
   { name: 'Facebook', icon: Facebook, color: 'bg-gradient-to-r from-blue-600 to-blue-700' },
   { name: 'LinkedIn', icon: Linkedin, color: 'bg-gradient-to-r from-blue-700 to-blue-800' },
-  { name: 'TikTok', icon: TikTok, color: 'bg-gradient-to-r from-black to-gray-800' },
+  { name: 'TikTok', icon: Video, color: 'bg-gradient-to-r from-black to-gray-800' },
 ];
 
 const PlatformSelector = () => {
