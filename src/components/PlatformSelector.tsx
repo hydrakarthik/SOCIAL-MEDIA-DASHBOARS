@@ -21,7 +21,7 @@ const PlatformSelector = () => {
   };
 
   return (
-    <div className="glass rounded-2xl p-6 border border-border mb-8">
+    <div className="glass rounded-2xl p-6 border border-border mb-8 bg-card">
       <h3 className="text-lg font-semibold text-foreground mb-4">Select Platforms</h3>
       <div className="flex flex-wrap gap-3">
         {platforms.map((platform) => {
@@ -32,14 +32,14 @@ const PlatformSelector = () => {
             <button
               key={platform.id}
               onClick={() => togglePlatform(platform.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all duration-200 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all duration-200 font-medium ${
                 isSelected
-                  ? 'border-primary bg-primary/10 text-primary'
-                  : 'border-border text-muted-foreground hover:bg-accent'
+                  ? 'border-primary bg-primary/20 text-primary shadow-md'
+                  : 'border-border text-muted-foreground hover:bg-accent hover:text-foreground hover:border-accent-foreground/20'
               }`}
             >
               <Icon className={`h-4 w-4 ${isSelected ? 'text-primary' : platform.color}`} />
-              <span className="text-sm font-medium">{platform.name}</span>
+              <span className="text-sm">{platform.name}</span>
             </button>
           );
         })}

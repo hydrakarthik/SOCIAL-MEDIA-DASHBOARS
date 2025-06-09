@@ -1,86 +1,73 @@
 
 import React from 'react';
-import { Brain, TrendingUp, Users, Video } from 'lucide-react';
-import { useAIInsights } from '@/hooks/useAIInsights';
+import { Brain, TrendingUp, AlertCircle, Lightbulb } from 'lucide-react';
 
-const AIInsightCard = () => {
-  const { data: insights, isLoading, error } = useAIInsights();
+interface AIInsightCardProps {
+  type: string;
+  title: string;
+  description: string;
+  action: string;
+  confidence: number;
+}
 
-  const getInsightIcon = (type: string) => {
+const AIInsightCard: React.FC<AIInsightCardProps> = ({
+  type,
+  title,
+  description,
+  action,
+  confidence
+}) => {
+  const getIcon = () => {
     switch (type) {
-      case 'performance':
+      case 'growth':
         return TrendingUp;
-      case 'content':
-        return Video;
-      case 'audience':
-        return Users;
+      case 'warning':
+        return AlertCircle;
+      case 'suggestion':
+        return Lightbulb;
       default:
         return Brain;
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="glass rounded-2xl p-6 border border-border">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-            <Brain className="h-5 w-5 text-white" />
-          </div>
-          <h3 className="text-lg font-semibold text-foreground">AI Insights</h3>
-        </div>
-        <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-muted rounded w-3/4"></div>
-          <div className="h-4 bg-muted rounded w-1/2"></div>
-          <div className="h-4 bg-muted rounded w-2/3"></div>
-        </div>
-      </div>
-    );
-  }
+  const getIconColor = () => {
+    switch (type) {
+      case 'growth':
+        return 'text-green-600 dark:text-green-400';
+      case 'warning':
+        return 'text-amber-600 dark:text-amber-400';
+      case 'suggestion':
+        return 'text-blue-600 dark:text-blue-400';
+      default:
+        return 'text-purple-600 dark:text-purple-400';
+    }
+  };
 
-  if (error) {
-    return (
-      <div className="glass rounded-2xl p-6 border border-border">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-            <Brain className="h-5 w-5 text-white" />
-          </div>
-          <h3 className="text-lg font-semibold text-foreground">AI Insights</h3>
-        </div>
-        <p className="text-muted-foreground">Unable to load insights</p>
-      </div>
-    );
-  }
+  const Icon = getIcon();
 
   return (
-    <div className="glass rounded-2xl p-6 border border-border">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-          <Brain className="h-5 w-5 text-white" />
+    <div className="glass rounded-2xl p-6 border border-border hover:shadow-lg transition-all duration-300 bg-card">
+      <div className="flex items-start space-x-4">
+        <div className={`p-2 rounded-lg bg-accent/50 ${getIconColor()}`}>
+          <Icon className="h-5 w-5" />
         </div>
-        <h3 className="text-lg font-semibold text-foreground">AI Insights</h3>
-      </div>
-
-      <div className="space-y-4">
-        {insights?.map((insight, index) => {
-          const IconComponent = getInsightIcon(insight.type);
-          return (
-            <div key={index} className="border border-border rounded-xl p-4 hover:bg-accent/50 transition-colors">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
-                  <IconComponent className="h-4 w-4 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-foreground mb-1">{insight.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-2">{insight.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-primary font-medium">{insight.action}</span>
-                    <span className="text-xs text-muted-foreground">{insight.confidence}% confidence</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-semibold text-foreground text-base">{title}</h3>
+            <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-1 rounded-full">
+              {confidence}% confidence
+            </span>
+          </div>
+          
+          <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+            {description}
+          </p>
+          
+          <button className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+            {action} →
+          </button>
+        </div>
       </div>
     </div>
   );
