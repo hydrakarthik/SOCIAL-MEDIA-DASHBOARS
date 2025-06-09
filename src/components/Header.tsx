@@ -1,11 +1,19 @@
+
 import React from 'react';
-import { Bell, MessageSquare } from 'lucide-react';
+import { Bell, MessageSquare, LogOut } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import Robot3D from './Robot3D';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
 
 const Header = () => {
   const currentHour = new Date().getHours();
   const emoji = currentHour < 12 ? '🌤️' : currentHour < 18 ? '☀️' : '🌙';
+  const { signOut, user } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <header className="glass border-b border-border/50 backdrop-blur-xl p-6">
@@ -47,8 +55,18 @@ const Header = () => {
           </button>
 
           <div className="w-10 h-10 gradient-primary rounded-full flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow">
-            <span className="text-white font-medium">K</span>
+            <span className="text-white font-medium">{user?.email?.[0]?.toUpperCase() || 'U'}</span>
           </div>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSignOut}
+            className="flex items-center gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign Out
+          </Button>
         </div>
       </div>
     </header>
