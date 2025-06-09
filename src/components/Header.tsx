@@ -5,7 +5,6 @@ import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const currentHour = new Date().getHours();
-  const greeting = currentHour < 12 ? 'Good Morning' : currentHour < 18 ? 'Good Afternoon' : 'Good Evening';
   const emoji = currentHour < 12 ? '🌤️' : currentHour < 18 ? '☀️' : '🌙';
 
   return (
@@ -13,7 +12,7 @@ const Header = () => {
       <div className="flex items-center justify-between">
         <div className="animate-fade-in">
           <h1 className="text-2xl font-bold text-foreground">
-            {greeting}, Karthik {emoji}
+            Welcome, Karthik {emoji}
           </h1>
           <p className="text-muted-foreground mt-1">
             Ready to create amazing content today?
@@ -33,7 +32,7 @@ const Header = () => {
           </div>
 
           {/* Notifications */}
-          <button className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors">
+          <button className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors bg-background border border-border">
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
               3
@@ -41,7 +40,7 @@ const Header = () => {
           </button>
 
           {/* Messages */}
-          <button className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors">
+          <button className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors bg-background border border-border">
             <MessageSquare className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-4 w-4 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
               2

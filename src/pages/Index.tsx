@@ -70,7 +70,7 @@ const Index = () => {
               <ScheduledPosts />
               
               {/* Quick Actions */}
-              <div className="glass rounded-2xl p-6">
+              <div className="glass rounded-2xl p-6 border border-border">
                 <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
                 <div className="space-y-3">
                   <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 font-medium hover:shadow-lg transition-all duration-200">
@@ -79,7 +79,7 @@ const Index = () => {
                   <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl py-3 font-medium hover:shadow-lg transition-all duration-200">
                     Schedule Content
                   </button>
-                  <button className="w-full border border-border text-foreground rounded-xl py-3 font-medium hover:bg-accent/50 transition-colors">
+                  <button className="w-full border border-border text-foreground rounded-xl py-3 font-medium hover:bg-accent transition-colors bg-background">
                     View Analytics
                   </button>
                 </div>

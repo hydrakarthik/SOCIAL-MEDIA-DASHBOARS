@@ -13,15 +13,15 @@ const navigation = [
 
 const Sidebar = () => {
   return (
-    <div className="fixed left-0 top-0 h-full w-64 glass border-r border-border/50 backdrop-blur-xl z-10">
+    <div className="fixed left-0 top-0 h-full w-64 bg-background border-r border-border backdrop-blur-xl z-10 shadow-lg">
       <div className="flex flex-col h-full">
         {/* Logo */}
-        <div className="p-6 border-b border-border/50">
+        <div className="p-6 border-b border-border">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">S</span>
             </div>
-            <span className="text-lg font-semibold text-foreground">SocialAI</span>
+            <span className="text-lg font-semibold text-foreground">Social Media Dashboard</span>
           </div>
         </div>
 
@@ -34,8 +34,8 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${
                   isActive
-                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                    ? 'bg-primary text-primary-foreground shadow-lg'
+                    : 'text-foreground hover:text-foreground hover:bg-accent border border-transparent hover:border-border'
                 }`
               }
             >
@@ -46,8 +46,8 @@ const Sidebar = () => {
         </nav>
 
         {/* User Profile */}
-        <div className="p-4 border-t border-border/50">
-          <div className="flex items-center space-x-3 p-3 rounded-xl bg-accent/30 hover:bg-accent/50 transition-colors cursor-pointer">
+        <div className="p-4 border-t border-border">
+          <div className="flex items-center space-x-3 p-3 rounded-xl bg-accent hover:bg-accent/80 transition-colors cursor-pointer border border-border">
             <div className="w-10 h-10 gradient-secondary rounded-full flex items-center justify-center">
               <span className="text-white font-medium text-sm">K</span>
             </div>
