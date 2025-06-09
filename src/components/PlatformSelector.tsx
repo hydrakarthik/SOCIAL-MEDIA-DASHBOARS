@@ -1,47 +1,49 @@
-import React, { useState } from 'react';
-import { Instagram, Youtube, Twitter, Facebook, Linkedin, Video } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
-const platforms = [
-  { name: 'Instagram', icon: Instagram, color: 'bg-gradient-to-r from-purple-500 to-pink-500' },
-  { name: 'YouTube', icon: Youtube, color: 'bg-gradient-to-r from-red-500 to-red-600' },
-  { name: 'Twitter', icon: Twitter, color: 'bg-gradient-to-r from-blue-400 to-blue-500' },
-  { name: 'Facebook', icon: Facebook, color: 'bg-gradient-to-r from-blue-600 to-blue-700' },
-  { name: 'LinkedIn', icon: Linkedin, color: 'bg-gradient-to-r from-blue-700 to-blue-800' },
-  { name: 'TikTok', icon: Video, color: 'bg-gradient-to-r from-black to-gray-800' },
-];
+import React, { useState } from 'react';
+import { Instagram, Twitter, Linkedin, Facebook } from 'lucide-react';
 
 const PlatformSelector = () => {
-  const [selectedPlatform, setSelectedPlatform] = useState('Instagram');
+  const [selectedPlatforms, setSelectedPlatforms] = useState(['instagram', 'twitter']);
+
+  const platforms = [
+    { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'text-pink-500' },
+    { id: 'twitter', name: 'Twitter', icon: Twitter, color: 'text-blue-500' },
+    { id: 'linkedin', name: 'LinkedIn', icon: Linkedin, color: 'text-blue-700' },
+    { id: 'facebook', name: 'Facebook', icon: Facebook, color: 'text-blue-600' },
+  ];
+
+  const togglePlatform = (platformId: string) => {
+    setSelectedPlatforms(prev =>
+      prev.includes(platformId)
+        ? prev.filter(id => id !== platformId)
+        : [...prev, platformId]
+    );
+  };
 
   return (
-    <div className="glass rounded-2xl p-6 mb-8">
-      <h2 className="text-xl font-semibold text-foreground mb-4">Select Platform</h2>
+    <div className="glass rounded-2xl p-6 border border-border mb-8">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Select Platforms</h3>
       <div className="flex flex-wrap gap-3">
         {platforms.map((platform) => {
-          const IconComponent = platform.icon;
-          const isSelected = selectedPlatform === platform.name;
+          const Icon = platform.icon;
+          const isSelected = selectedPlatforms.includes(platform.id);
           
           return (
-            <Button
-              key={platform.name}
-              variant={isSelected ? "default" : "outline"}
-              onClick={() => setSelectedPlatform(platform.name)}
-              className={`flex items-center space-x-2 ${
-                isSelected 
-                  ? `${platform.color} text-white hover:opacity-90` 
-                  : 'hover:bg-accent'
+            <button
+              key={platform.id}
+              onClick={() => togglePlatform(platform.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all duration-200 ${
+                isSelected
+                  ? 'border-primary bg-primary/10 text-primary'
+                  : 'border-border text-muted-foreground hover:bg-accent'
               }`}
             >
-              <IconComponent className="w-4 h-4" />
-              <span>{platform.name}</span>
-            </Button>
+              <Icon className={`h-4 w-4 ${isSelected ? 'text-primary' : platform.color}`} />
+              <span className="text-sm font-medium">{platform.name}</span>
+            </button>
           );
         })}
       </div>
-      <p className="text-sm text-muted-foreground mt-3">
-        Currently managing: <span className="font-medium text-foreground">{selectedPlatform}</span>
-      </p>
     </div>
   );
 };

@@ -1,61 +1,76 @@
 
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useDashboardStats } from '@/hooks/useDashboardStats';
 
 const EngagementChart = () => {
-  const data = [
-    { name: 'Mon', engagement: 245 },
-    { name: 'Tue', engagement: 312 },
-    { name: 'Wed', engagement: 189 },
-    { name: 'Thu', engagement: 456 },
-    { name: 'Fri', engagement: 378 },
-    { name: 'Sat', engagement: 523 },
-    { name: 'Sun', engagement: 298 },
-  ];
+  const { data: stats, isLoading, error } = useDashboardStats();
 
-  return (
-    <div className="glass rounded-2xl p-6 animate-fade-in">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">Weekly Engagement</h3>
-          <p className="text-sm text-muted-foreground">Total interactions across platforms</p>
-        </div>
-        <div className="text-right">
-          <p className="text-2xl font-bold text-foreground">2,401</p>
-          <p className="text-sm text-green-600">+12.5% vs last week</p>
+  if (isLoading) {
+    return (
+      <div className="glass rounded-2xl p-6 border border-border">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Weekly Engagement</h3>
+        <div className="animate-pulse">
+          <div className="h-64 bg-muted rounded"></div>
         </div>
       </div>
+    );
+  }
 
+  if (error || !stats) {
+    return (
+      <div className="glass rounded-2xl p-6 border border-border">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Weekly Engagement</h3>
+        <p className="text-muted-foreground">Unable to load chart data</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="glass rounded-2xl p-6 border border-border">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Weekly Engagement</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
+          <LineChart data={stats.weeklyData}>
+            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
             <XAxis 
-              dataKey="name" 
-              axisLine={false}
-              tickLine={false}
-              className="text-xs text-muted-foreground"
+              dataKey="day" 
+              className="text-muted-foreground"
+              fontSize={12}
             />
-            <YAxis hide />
+            <YAxis 
+              className="text-muted-foreground"
+              fontSize={12}
+            />
             <Tooltip 
-              contentStyle={{
-                backgroundColor: 'white',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+              contentStyle={{ 
+                backgroundColor: 'hsl(var(--background))', 
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '8px'
               }}
             />
-            <Bar 
-              dataKey="engagement" 
-              fill="url(#colorGradient)"
-              radius={[8, 8, 0, 0]}
+            <Line 
+              type="monotone" 
+              dataKey="followers" 
+              stroke="#3b82f6" 
+              strokeWidth={2}
+              name="Followers"
             />
-            <defs>
-              <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#667eea" />
-                <stop offset="100%" stopColor="#764ba2" />
-              </linearGradient>
-            </defs>
-          </BarChart>
+            <Line 
+              type="monotone" 
+              dataKey="likes" 
+              stroke="#10b981" 
+              strokeWidth={2}
+              name="Likes"
+            />
+            <Line 
+              type="monotone" 
+              dataKey="comments" 
+              stroke="#f59e0b" 
+              strokeWidth={2}
+              name="Comments"
+            />
+          </LineChart>
         </ResponsiveContainer>
       </div>
     </div>

@@ -8,8 +8,11 @@ import AIInsightCard from '../components/AIInsightCard';
 import ScheduledPosts from '../components/ScheduledPosts';
 import EngagementChart from '../components/EngagementChart';
 import { Home, BarChart2, Calendar, MessageSquare } from 'lucide-react';
+import { useDashboardStats } from '@/hooks/useDashboardStats';
 
 const Index = () => {
+  const { data: stats, isLoading } = useDashboardStats();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-950 dark:to-indigo-950">
       <Sidebar />
@@ -18,42 +21,41 @@ const Index = () => {
         <Header />
         
         <main className="p-6">
-          {/* Platform Selector */}
           <PlatformSelector />
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatsCard
               title="Total Followers"
-              value="12.4K"
+              value={isLoading ? "..." : stats?.totalFollowers?.toLocaleString() || "0"}
               change="+5.2%"
               changeType="positive"
               icon={Home}
-              gradient="gradient-primary"
+              gradient="bg-gradient-to-r from-blue-500 to-blue-600"
             />
             <StatsCard
               title="Engagement Rate"
-              value="8.7%"
+              value={isLoading ? "..." : `${stats?.engagementRate || "0"}%`}
               change="+1.3%"
               changeType="positive"
               icon={BarChart2}
-              gradient="gradient-secondary"
+              gradient="bg-gradient-to-r from-purple-500 to-purple-600"
             />
             <StatsCard
               title="Posts This Week"
-              value="14"
+              value={isLoading ? "..." : stats?.postsThisWeek || "0"}
               change="+2"
               changeType="positive"
               icon={Calendar}
-              gradient="gradient-accent"
+              gradient="bg-gradient-to-r from-green-500 to-green-600"
             />
             <StatsCard
               title="Unread Messages"
-              value="23"
+              value={isLoading ? "..." : stats?.unreadMessages || "0"}
               change="-4"
               changeType="positive"
               icon={MessageSquare}
-              gradient="gradient-primary"
+              gradient="bg-gradient-to-r from-orange-500 to-orange-600"
             />
           </div>
 

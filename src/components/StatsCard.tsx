@@ -4,11 +4,11 @@ import { LucideIcon } from 'lucide-react';
 
 interface StatsCardProps {
   title: string;
-  value: string;
+  value: string | number;
   change: string;
-  changeType: 'positive' | 'negative' | 'neutral';
+  changeType: 'positive' | 'negative';
   icon: LucideIcon;
-  gradient?: string;
+  gradient: string;
 }
 
 const StatsCard: React.FC<StatsCardProps> = ({
@@ -17,28 +17,26 @@ const StatsCard: React.FC<StatsCardProps> = ({
   change,
   changeType,
   icon: Icon,
-  gradient = 'gradient-primary'
+  gradient
 }) => {
-  const changeColor = {
-    positive: 'text-green-600',
-    negative: 'text-red-600',
-    neutral: 'text-muted-foreground'
-  }[changeType];
-
   return (
-    <div className="glass rounded-2xl p-6 hover:shadow-lg transition-all duration-300 animate-scale-in group">
+    <div className="glass rounded-2xl p-6 border border-border hover:shadow-lg transition-all duration-300">
       <div className="flex items-center justify-between mb-4">
-        <div className={`w-12 h-12 ${gradient} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
+        <div className={`w-12 h-12 ${gradient} rounded-xl flex items-center justify-center`}>
           <Icon className="h-6 w-6 text-white" />
         </div>
-        <div className={`text-sm font-medium ${changeColor}`}>
+        <span className={`text-sm font-medium px-2 py-1 rounded-full ${
+          changeType === 'positive' 
+            ? 'text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/20' 
+            : 'text-red-600 bg-red-100 dark:text-red-400 dark:bg-red-900/20'
+        }`}>
           {change}
-        </div>
+        </span>
       </div>
       
       <div>
-        <h3 className="text-sm font-medium text-muted-foreground mb-1">{title}</h3>
-        <p className="text-2xl font-bold text-foreground">{value}</p>
+        <h3 className="text-2xl font-bold text-foreground mb-1">{value}</h3>
+        <p className="text-muted-foreground text-sm">{title}</p>
       </div>
     </div>
   );
